@@ -2,6 +2,7 @@ from sklearn.datasets import load_iris
 from sklearn.metrics import accuracy_score, classification_report
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 import matplotlib.pyplot as plt
 from sklearn import tree
@@ -13,9 +14,19 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
 
-print("Bez skalowania")
-print(X_train)
-print("Ze skalowaniem")
-print(X_train_scaled)
+# print("Bez skalowania")
+# print(X_train)
+# print("Ze skalowaniem")
+# print(X_train_scaled)
 
+k_range = range(1,31)
+scores = []
+
+for k in k_range:
+    knn = KNeighborsClassifier(n_neighbors=k)
+    knn.fit(X_train_scaled, y_train)
+    scores.append(knn.score(X_test_scaled, y_test))
+
+print(scores)
