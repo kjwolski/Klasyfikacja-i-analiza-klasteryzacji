@@ -19,42 +19,37 @@ for k in K_range:
 print(inertias)
 
 
-
-plt.figure(figsize=(8,5))
+plt.figure(figsize=(16, 10))
+plt.subplot(2,2,1)
 plt.plot(K_range, silhouette_scores)
 plt.title("Współczynnik sylwetkowy dla liczby klastrów (k)")
 plt.xlabel("Liczba klastrów")
 plt.ylabel("Wartość współczynnika")
 plt.grid(True)
-plt.show()
 
 
-plt.figure(figsize=(8,5))
+plt.subplot(2,2,2)
 plt.plot(K_range, inertias)
 plt.title("Metoda łokcia")
 plt.xlabel("Liczba klastrów")
 plt.ylabel("Wartość współczynnika")
 plt.grid(True)
-plt.show()
 
 optimal_k = 4
 kmeans = KMeans(n_clusters=optimal_k, random_state=42)
 y_kmeans = kmeans.fit_predict(X_blobs)
 
-
-plt.figure(figsize=(16, 5))
-plt.subplot(1,2,1)
+plt.subplot(2,2,3)
 plt.scatter(X_blobs[:, 0], X_blobs[:, 1], c=y_true)
 plt.title('Prawdziwe etykiety')
 plt.xlabel('Cecha 1')
 plt.ylabel('Cecha 2')
 
-plt.subplot(1,2,1)
+plt.subplot(2,2,4)
 plt.scatter(X_blobs[:, 0], X_blobs[:, 1], c=y_kmeans)
-plt.scatter(kmeans.cluster_centers_[:,0], kmeans.cluster_centers_[:,1], marker='X',c='red',s=200, label='Controidy')
+plt.scatter(kmeans.cluster_centers_[:,0], kmeans.cluster_centers_[:,1], marker='X',c='red',s=200, label='Centroidy')
 plt.title('Klasteryzacja K-means')
 plt.xlabel('Cecha 1')
 plt.ylabel('Cecha 2')
 plt.legend()
 plt.show()
-
