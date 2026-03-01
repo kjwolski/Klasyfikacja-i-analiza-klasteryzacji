@@ -3,15 +3,8 @@ from sklearn.datasets import make_blobs
 from sklearn.metrics import silhouette_score
 import matplotlib.pyplot as plt
 
-X_blobs, y_true = make_blobs(n_samples=600, centers=4,
-                             cluster_std=0.5, random_state=42)
-
-plt.figure(figsize=(8, 5))
-plt.scatter(X_blobs[:, 0], X_blobs[:, 1], c=y_true)
-plt.title('Prawdziwe etykiety')
-plt.xlabel('Cecha 1')
-plt.ylabel('Cecha 2')
-plt.show()
+X_blobs, y_true = make_blobs(n_samples=300, centers=4,
+                             cluster_std=2.5, random_state=42)
 
 inertias = []
 silhouette_scores = []
@@ -30,7 +23,7 @@ print(inertias)
 plt.figure(figsize=(8,5))
 plt.plot(K_range, silhouette_scores)
 plt.title("Współczynnik sylwetkowy dla liczby klastrów (k)")
-plt.xlabel("Ilość klastrów")
+plt.xlabel("Liczba klastrów")
 plt.ylabel("Wartość współczynnika")
 plt.grid(True)
 plt.show()
@@ -38,8 +31,30 @@ plt.show()
 
 plt.figure(figsize=(8,5))
 plt.plot(K_range, inertias)
-plt.title("Współczynnik sylwetkowy dla liczby klastrów (k)")
-plt.xlabel("Ilość klastrów")
+plt.title("Metoda łokcia")
+plt.xlabel("Liczba klastrów")
 plt.ylabel("Wartość współczynnika")
 plt.grid(True)
 plt.show()
+
+optimal_k = 4
+kmeans = KMeans(n_clusters=optimal_k, random_state=42)
+y_kmeans = kmeans.fit_predict(X_blobs)
+
+
+plt.figure(figsize=(16, 5))
+plt.subplot(1,2,1)
+plt.scatter(X_blobs[:, 0], X_blobs[:, 1], c=y_true)
+plt.title('Prawdziwe etykiety')
+plt.xlabel('Cecha 1')
+plt.ylabel('Cecha 2')
+
+plt.subplot(1,2,1)
+plt.scatter(X_blobs[:, 0], X_blobs[:, 1], c=y_kmeans)
+plt.scatter(kmeans.cluster_centers_[:,0], kmeans.cluster_centers_[:,1], marker='X',c='red',s=200, label='Controidy')
+plt.title('Klasteryzacja K-means')
+plt.xlabel('Cecha 1')
+plt.ylabel('Cecha 2')
+plt.legend()
+plt.show()
+
