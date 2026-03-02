@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbot</title>
+</head>
+<body>
+  <h1>Chatbot Gemini</h1>
+  {% for msg in history %}
+  <p><b>{{ 'Ja:' if msg.role == 'user' else 'Gemini:' }}</b> {{ msg.parts[0].text }}</p>
+  {% endfor %}
+  <form method="POST">
+  <input type="hidden" name="history" value="{{ history_json }}">
+  <input type="text" name="prompt" required>
+  <button type="submit">Wyślij</button>
+</form>
+</body>
+</html>
